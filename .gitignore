@@ -1,0 +1,5 @@
+Gemfile.lock
+coverage
+*.gem
+
+spec/dummy/log
