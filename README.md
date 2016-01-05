@@ -42,7 +42,7 @@ RPC via connector:
 
 ```
 POST /services/something.SomethingService/List
-REQUEST PROTO: SomethingReqest.new(param: 'one')
+REQUEST PROTO: SomethingRequest.new(param: 'one')
 RESPONSE PROTO: SomethingResponse.new(some: 'output')
 ```
 
