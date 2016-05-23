@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.homepage      = 'https://rubygems.org/gems/rough'
 
   gem.add_dependency 'rails', '~> 4.1'
-  gem.add_dependency 'protobuf', '~> 3.4'
+  gem.add_dependency 'protobuf', '>= 3.4'
 
   gem.add_development_dependency 'actionpack', '~> 4.1'
   gem.add_development_dependency 'rspec', '~> 3'
