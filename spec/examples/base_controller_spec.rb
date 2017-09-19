@@ -32,11 +32,6 @@ describe TestController, type: :request do
         expect(response.status).to eq(TestController::STATUS)
       end
 
-      it 'should log the request proto' do
-        rp = FakeRequestProto.new({ name: 'john', rpc: 'Fake#fake', action: 'test', controller: 'test' }.stringify_keys)
-        expect(Rails.logger).to have_received(:info).with("  Request Proto: #{rp.inspect}")
-      end
-
       it 'should respond with json' do
         expect(response.content_type).to eq('application/json')
       end
@@ -46,7 +41,6 @@ describe TestController, type: :request do
     context 'and called over json' do
 
       before do
-        allow(Rails.logger).to receive(:info)
         post '/test-rpc', {
           name: 'john'
         }.to_json, 'Content-Type' => 'application/json', 'Accept' => 'application/json'
@@ -54,11 +48,6 @@ describe TestController, type: :request do
 
       it 'should pass back the response status' do
         expect(response.status).to eq(TestController::STATUS)
-      end
-
-      it 'should log the request proto' do
-        rp = FakeRequestProto.new({ name: 'john', rpc: 'Fake#fake', action: 'test', controller: 'test' }.stringify_keys)
-        expect(Rails.logger).to have_received(:info).with("  Request Proto: #{rp.inspect}")
       end
 
       it 'should respond with json' do
@@ -74,7 +63,6 @@ describe TestController, type: :request do
       let(:mime) { Rough::BaseController::PROTO_MIME.to_s }
 
       before do
-        allow(Rails.logger).to receive(:info)
         post '/test-rpc', echo_request.encode, 'Content-Type' => mime, 'Accept' => mime
       end
 
@@ -120,17 +108,11 @@ describe TestController, type: :request do
   context 'when the route is not rpc' do
 
     before do
-      allow(Rails.logger).to receive(:info)
       post '/test-not-rpc', name: 'john'
     end
 
     it 'should pass back the response status' do
       expect(response.status).to eq(TestController::STATUS)
-    end
-
-    it 'should not log the request proto' do
-      rp = OpenStruct.new(name: 'john', rpc: 'Fake#fake', action: 'test', controller: 'test')
-      expect(Rails.logger).not_to have_received(:info).with("  Request Proto: #{rp.inspect}")
     end
 
   end
