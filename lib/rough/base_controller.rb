@@ -10,7 +10,6 @@ module Rough
 
     def self.included(base)
       base.class_eval do
-        before_action :log_proto, if: :rpc?
         alias_method_chain :params, :request_proto
       end
     end
@@ -58,10 +57,6 @@ module Rough
 
     def rpc?
       rpc_name
-    end
-
-    def log_proto
-      Rails.logger.info("  Request Proto: #{request_proto.inspect}")
     end
 
     def rpc_name
